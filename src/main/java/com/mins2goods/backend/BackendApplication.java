@@ -16,24 +16,4 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	@Bean
-	PasswordEncoder passwordEncoder()
-	{
-		return new BCryptPasswordEncoder();
-	}
-	@Bean
-	static CommandLineRunner run(UserService userService){
-		return args -> {
-			// Creating a new user with ROLE_USER
-			userService.saveUser(new User(null, "ROLE_USER", "alice", true, "password123", "1234567890", "alice@example.com", "Smith", "Alice"));
-
-			// Creating a new user with ROLE_SELLER
-			userService.saveUser(new User(null, "ROLE_SELLER", "bob", true, "password456", "0987654321", "bob@example.com", "Johnson", "Bob"));
-
-			// Creating a new user with ROLE_ADMIN
-			userService.saveUser(new User(null, "ROLE_ADMIN", "charlie", true, "password789", "9876543210", "charlie@example.com", "Williams", "Charlie"));
-
-		};
-	}
-
 }

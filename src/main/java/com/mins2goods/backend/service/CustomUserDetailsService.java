@@ -3,6 +3,7 @@ package com.mins2goods.backend.service;
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,23 +18,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserServiceImpl implements UserService {
-
+public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
-
     @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
-    }
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
 
-    @Override
-    public User getUser(String username) {
-        return userRepository.findByUsername(username);
-    }
+        if(user==null){
+            throw new UsernameNotFoundException("User not found in the database");
+        }
 
-    @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
 
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+    }
 }

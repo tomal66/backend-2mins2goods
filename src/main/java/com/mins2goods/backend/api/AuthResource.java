@@ -14,13 +14,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthResource {
 
     private final AuthenticationManager authenticationManager;
@@ -42,10 +40,15 @@ public class AuthResource {
         if(userRepository.existsByUsername(registerDto.getUsername())){
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
+        registerDto.setRole("ROLE_USER");
 
         User user = new User();
         user.setUsername(registerDto.getUsername());
+        user.setFirstname(registerDto.getFirstname());
+        user.setLastname(registerDto.getLastname());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setMobile(registerDto.getMobile());
+        user.setEmail(registerDto.getEmail());
         user.setRole(registerDto.getRole());
         userRepository.save(user);
 

@@ -40,7 +40,7 @@ public class AuthResource {
         if(userRepository.existsByUsername(registerDto.getUsername())){
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
-        registerDto.setRole("ROLE_USER");
+        //registerDto.setRole("ROLE_USER");
 
         User user = new User();
         user.setUsername(registerDto.getUsername());
@@ -63,6 +63,9 @@ public class AuthResource {
                         loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
+        String username = jwtGenerator.getUsernameFromJWT(token);
+        String role = userRepository.findByUsername(username).getRole();
+
+        return new ResponseEntity<>(new AuthResponseDto(token, username, role), HttpStatus.OK);
     }
 }

@@ -1,8 +1,10 @@
 package com.mins2goods.backend.api;
 
+import com.mins2goods.backend.dto.AddressDto;
 import com.mins2goods.backend.dto.AuthResponseDto;
 import com.mins2goods.backend.dto.LoginDto;
 import com.mins2goods.backend.dto.RegisterDto;
+import com.mins2goods.backend.model.Address;
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.repository.UserRepository;
 import com.mins2goods.backend.security.JWTGenerator;
@@ -50,6 +52,20 @@ public class AuthResource {
         user.setMobile(registerDto.getMobile());
         user.setEmail(registerDto.getEmail());
         user.setRole(registerDto.getRole());
+        AddressDto addressDto = registerDto.getAddress();
+        if(addressDto!=null)
+        {
+            Address address = new Address();
+            address.setAddress(addressDto.getAddress());
+            address.setCity(addressDto.getCity());
+            address.setCountry(addressDto.getCountry());
+            address.setLongitude(addressDto.getLongitude());
+            address.setLatitude(addressDto.getLatitude());
+            address.setZipcode(addressDto.getZipcode());
+            address.setState(addressDto.getState());
+            address.setUser(user);
+            user.setAddress(address);
+        }
         userRepository.save(user);
 
         return new ResponseEntity<>("User registration success!", HttpStatus.OK);

@@ -11,4 +11,6 @@ public class RegisterDto {
     private String mobile;
     private String email;
     private String role;
+    private boolean isActive;
+    private AddressDto address;
 }

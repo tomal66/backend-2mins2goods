@@ -1,8 +1,7 @@
 package com.mins2goods.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = AUTO)
     private Long userId;
-
     private String role;
     private String username;
     private boolean isActive;
@@ -26,5 +24,9 @@ public class User {
     private String email;
     private String lastname;
     private String firstname;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Address address;
 
 }

@@ -12,9 +12,9 @@ public class AddressDto {
 
     private String city;
 
-    private String longitude;
+    private Double longitude;
 
-    private String latitude;
+    private Double latitude;
 
     private String state;
 }

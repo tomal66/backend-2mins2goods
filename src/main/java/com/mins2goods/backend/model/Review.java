@@ -11,18 +11,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductImage {
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long imageId;
-    private int sortOrder;
-    private String altText;
-    private String type;
-    private String imageUrl;
-    private boolean isPrimary;
-
+    private Long reviewId;
+    private String comment;
+    private int rating;
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "buyer_id")
+    private User buyer;
+
 }

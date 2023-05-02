@@ -24,7 +24,7 @@ public class ProductImageServiceImpl implements ProductImageService{
     public String uploadImage(MultipartFile file) throws IOException {
         String url = STORAGE_PATH+file.getOriginalFilename();
         ProductImage productImage = new ProductImage();
-        productImage.setSort_order(1);
+        productImage.setSortOrder(1);
         productImage.setAltText("Image");
         productImage.setType(file.getContentType());
         productImage.setImageUrl(url);

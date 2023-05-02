@@ -60,5 +60,11 @@ public class ProductResource {
         return new ResponseEntity<>("Product added", HttpStatus.OK);
     }
 
+    @GetMapping("/{productid}")
+    public ResponseEntity<Product> getById(@PathVariable Long productid)
+    {
+        return ResponseEntity.ok().body(productService.getProductById(productid));
+    }
+
 
 }

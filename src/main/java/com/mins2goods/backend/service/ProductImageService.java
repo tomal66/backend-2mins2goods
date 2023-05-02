@@ -8,5 +8,5 @@ import java.io.IOException;
 public interface ProductImageService {
     String uploadImage(MultipartFile file) throws IOException;
 
-    byte[] downloadImage(String url) throws IOException;
+    byte[] downloadImage(Long imageId) throws IOException;
 }

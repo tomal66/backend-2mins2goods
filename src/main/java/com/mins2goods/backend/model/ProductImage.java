@@ -17,6 +17,7 @@ public class ProductImage {
     private Long imageId;
     private int sort_order;
     private String altText;
+    private String type;
     private String imageUrl;
     private boolean isPrimary;
 

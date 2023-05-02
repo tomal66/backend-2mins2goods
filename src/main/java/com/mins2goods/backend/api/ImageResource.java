@@ -21,9 +21,9 @@ public class ImageResource {
         return ResponseEntity.status(HttpStatus.OK).body(uploadedImage);
     }
 
-    @GetMapping("/image")
-    public ResponseEntity<?> downloadImage(@RequestParam String url) throws IOException {
-        byte[] imageData = productImageService.downloadImage(url);
+    @GetMapping("/download")
+    public ResponseEntity<?> downloadImage(@RequestParam Long imageId) throws IOException {
+        byte[] imageData = productImageService.downloadImage(imageId);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);

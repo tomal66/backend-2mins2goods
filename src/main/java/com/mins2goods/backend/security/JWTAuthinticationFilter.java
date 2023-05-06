@@ -1,6 +1,6 @@
 package com.mins2goods.backend.security;
 
-import com.mins2goods.backend.service.CustomUserDetailsService;
+import com.mins2goods.backend.service.impl.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

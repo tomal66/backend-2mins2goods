@@ -1,8 +1,9 @@
-package com.mins2goods.backend.service;
+package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.model.CartItem;
 import com.mins2goods.backend.repository.CartItemRepository;
 import com.mins2goods.backend.repository.UserRepository;
+import com.mins2goods.backend.service.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class CartItemServiceImpl implements CartItemService{
+public class CartItemServiceImpl implements CartItemService {
     private final CartItemRepository cartItemRepository;
     private final UserRepository userRepository;
 

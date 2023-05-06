@@ -1,7 +1,8 @@
-package com.mins2goods.backend.service;
+package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.model.Review;
 import com.mins2goods.backend.repository.ReviewRepository;
+import com.mins2goods.backend.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Override

@@ -1,9 +1,10 @@
-package com.mins2goods.backend.service;
+package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.model.Address;
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.repository.AddressRepository;
 import com.mins2goods.backend.repository.UserRepository;
+import com.mins2goods.backend.service.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AddressServiceImpl implements AddressService{
+public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;

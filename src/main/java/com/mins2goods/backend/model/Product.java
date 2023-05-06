@@ -40,5 +40,8 @@ public class Product {
     @JsonBackReference
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CartItem> atCarts;
+    @JsonBackReference
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderItem> atOrders;
 
 }

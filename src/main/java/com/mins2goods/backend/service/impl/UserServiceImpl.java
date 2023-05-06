@@ -1,7 +1,8 @@
-package com.mins2goods.backend.service;
+package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.repository.UserRepository;
+import com.mins2goods.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

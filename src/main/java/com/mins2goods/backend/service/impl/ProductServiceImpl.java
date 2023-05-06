@@ -1,9 +1,10 @@
-package com.mins2goods.backend.service;
+package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.model.Product;
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.repository.ProductRepository;
 import com.mins2goods.backend.repository.UserRepository;
+import com.mins2goods.backend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     @Override

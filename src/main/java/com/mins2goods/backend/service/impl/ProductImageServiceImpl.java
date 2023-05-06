@@ -1,7 +1,8 @@
-package com.mins2goods.backend.service;
+package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.model.ProductImage;
 import com.mins2goods.backend.repository.ProductImageRepository;
+import com.mins2goods.backend.service.ProductImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ProductImageServiceImpl implements ProductImageService{
+public class ProductImageServiceImpl implements ProductImageService {
 
     private final ProductImageRepository productImageRepository;
 

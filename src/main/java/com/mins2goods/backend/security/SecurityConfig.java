@@ -1,6 +1,6 @@
 package com.mins2goods.backend.security;
 
-import com.mins2goods.backend.service.CustomUserDetailsService;
+import com.mins2goods.backend.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

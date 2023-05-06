@@ -2,8 +2,8 @@ package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.dto.OrderDto;
 import com.mins2goods.backend.dto.OrderItemDto;
-import com.mins2goods.backend.model.Order;
 import com.mins2goods.backend.model.OrderItem;
+import com.mins2goods.backend.model.Orders;
 import com.mins2goods.backend.model.Product;
 import com.mins2goods.backend.repository.OrderItemRepository;
 import com.mins2goods.backend.repository.OrderRepository;
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class OrderItemServiceImpl implements OrderItemService {
     private final OrderItemRepository orderItemRepository;
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
 
     @Override
@@ -37,7 +38,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
-        return orderItemRepository.findByOrderId(orderId);
+        Optional<Orders> order = orderRepository.findById(orderId);
+        return orderItemRepository.findByOrder(order);
     }
 
     @Override

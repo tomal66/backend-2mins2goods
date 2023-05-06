@@ -43,6 +43,6 @@ public class User {
     private List<CartItem> cartItems;
     @JsonBackReference
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Order> orders;
+    private List<Orders> orders;
 
 }

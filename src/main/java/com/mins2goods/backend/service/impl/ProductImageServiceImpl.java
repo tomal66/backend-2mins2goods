@@ -24,17 +24,16 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     private final String STORAGE_PATH="C:\\Users\\User\\Desktop\\Storage\\";
     @Override
-    public String uploadImage(MultipartFile file) throws IOException {
+    public Long uploadImage(MultipartFile file) throws IOException {
         String url = STORAGE_PATH+file.getOriginalFilename();
         ProductImage productImage = new ProductImage();
         productImage.setSortOrder(1);
         productImage.setAltText("Image");
         productImage.setType(file.getContentType());
         productImage.setImageUrl(url);
-
         productImageRepository.save(productImage);
         file.transferTo(new File(url));
-        return productImage.getImageId().toString();
+        return productImage.getImageId();
     }
 
     @Override

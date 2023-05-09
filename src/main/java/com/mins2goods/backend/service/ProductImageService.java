@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface ProductImageService {
-    String uploadImage(MultipartFile file) throws IOException;
+    Long uploadImage(MultipartFile file) throws IOException;
 
     byte[] downloadImage(Long imageId) throws IOException;
 }

@@ -52,6 +52,7 @@ public class AuthResource {
         user.setMobile(registerDto.getMobile());
         user.setEmail(registerDto.getEmail());
         user.setRole(registerDto.getRole());
+        user.setActive(true);
         AddressDto addressDto = registerDto.getAddress();
         if(addressDto!=null)
         {

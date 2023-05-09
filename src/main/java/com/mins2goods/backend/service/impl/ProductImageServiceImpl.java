@@ -2,6 +2,7 @@ package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.model.ProductImage;
 import com.mins2goods.backend.repository.ProductImageRepository;
+import com.mins2goods.backend.repository.ProductRepository;
 import com.mins2goods.backend.service.ProductImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class ProductImageServiceImpl implements ProductImageService {
 
     private final ProductImageRepository productImageRepository;
+    private final ProductRepository productRepository;
 
     private final String STORAGE_PATH="C:\\Users\\User\\Desktop\\Storage\\";
     @Override

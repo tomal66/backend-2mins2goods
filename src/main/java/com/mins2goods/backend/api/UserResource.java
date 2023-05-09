@@ -1,5 +1,6 @@
 package com.mins2goods.backend.api;
 
+import com.mins2goods.backend.dto.UserDto;
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class UserResource {
     private final UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers()
+    public ResponseEntity<List<UserDto>> getUsers()
     {
         return ResponseEntity.ok().body(userService.getUsers());
     }

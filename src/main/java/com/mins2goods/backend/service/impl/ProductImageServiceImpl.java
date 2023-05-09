@@ -20,7 +20,6 @@ import java.util.Optional;
 public class ProductImageServiceImpl implements ProductImageService {
 
     private final ProductImageRepository productImageRepository;
-    private final ProductRepository productRepository;
 
     private final String STORAGE_PATH="C:\\Users\\User\\Desktop\\Storage\\";
     @Override

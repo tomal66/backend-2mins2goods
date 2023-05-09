@@ -14,6 +14,7 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/image")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ImageResource {
     private final ProductImageService productImageService;
     private final ProductImageRepository productImageRepository;

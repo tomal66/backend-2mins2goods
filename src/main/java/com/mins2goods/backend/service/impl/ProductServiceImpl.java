@@ -43,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
                     product.setQuantity(updatedProduct.getQuantity());
                     product.setLatitude(updatedProduct.getLatitude());
                     product.setLongitude(updatedProduct.getLongitude());
+                    product.setCategory(updatedProduct.getCategory());
                     return productRepository.save(product);
                 });
     }

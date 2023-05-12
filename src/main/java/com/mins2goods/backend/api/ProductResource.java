@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -96,6 +97,24 @@ public class ProductResource {
     {
         return ResponseEntity.ok().body(convertProductToProductDto(productService.getProductById(productid)));
     }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
+        Product product = new Product();
+        product.setProductId(productDto.getProductId());
+        product.setTitle(productDto.getTitle());
+        product.setDescription(productDto.getDescription());
+        product.setPrice(productDto.getPrice());
+        product.setQuantity(productDto.getQuantity());
+        product.setLatitude(productDto.getLatitude());
+        product.setLongitude(productDto.getLongitude());
+        product.setCategory(productDto.getCategory());
+        User seller = userService.getUser(productDto.getSellerUsername());
+        product.setSeller(seller);
+        productService.updateProduct(product);
+        return ResponseEntity.ok(productDto);
+    }
+
 
     @DeleteMapping("/{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
@@ -42,4 +43,25 @@ public class ProductImageServiceImpl implements ProductImageService {
 
         return Files.readAllBytes(new File(url).toPath());
     }
+
+    @Override
+    public void deleteImage(Long imageId) throws IOException {
+        Optional<ProductImage> productImageOpt = productImageRepository.findById(imageId);
+        if (productImageOpt.isPresent()) {
+            ProductImage productImage = productImageOpt.get();
+            String url = productImage.getImageUrl();
+
+            // Delete image file from storage
+            File file = new File(url);
+            if (file.delete()) {
+                // Delete record from database
+                productImageRepository.delete(productImage);
+            } else {
+                throw new IOException("Could not delete file: " + url);
+            }
+        } else {
+            throw new FileNotFoundException("Image not found");
+        }
+    }
+
 }

@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public interface ProductImageService {
     Long uploadImage(MultipartFile file) throws IOException;
-
     byte[] downloadImage(Long imageId) throws IOException;
+    void deleteImage(Long imageId) throws IOException;
 }

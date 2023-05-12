@@ -97,6 +97,18 @@ public class ProductResource {
         return ResponseEntity.ok().body(convertProductToProductDto(productService.getProductById(productid)));
     }
 
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
+        try {
+            productService.deleteProduct(productId);
+            return ResponseEntity.noContent().build();  // 204 No Content
+        } catch (Exception e) {
+            // log the error and return an appropriate HTTP status
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();  // 500 Internal Server Error
+        }
+    }
+
+
     public ProductDto convertProductToProductDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setProductId(product.getProductId());

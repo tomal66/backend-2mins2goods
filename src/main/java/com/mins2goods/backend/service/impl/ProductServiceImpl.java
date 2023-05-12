@@ -1,14 +1,17 @@
 package com.mins2goods.backend.service.impl;
 
 import com.mins2goods.backend.model.Product;
+import com.mins2goods.backend.model.ProductImage;
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.repository.ProductRepository;
 import com.mins2goods.backend.repository.UserRepository;
+import com.mins2goods.backend.service.ProductImageService;
 import com.mins2goods.backend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final ProductImageService productImageService;
     @Override
     public Product getProductById(Long productId) {
         return productRepository.findByProductId(productId);
@@ -45,8 +49,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long productId) {
-        productRepository.delete(productRepository.findByProductId(productId));
+        Optional<Product> productOpt = productRepository.findById(productId);
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+            List<ProductImage> images = product.getProductImages();
+            for (ProductImage image : images) {
+                try {
+                    productImageService.deleteImage(image.getImageId());
+                } catch (IOException e) {
+                    // log the error and continue with the next image
+                }
+            }
+            productRepository.delete(product);
+        }  // handle product not found situation
+
     }
+
 
     @Override
     public List<Product> findBySeller(String username) {

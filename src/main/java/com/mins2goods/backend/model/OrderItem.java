@@ -17,6 +17,7 @@ public class OrderItem {
     private Long itemId;
     private Long quantity;
     private String status;
+    private String deliveryMethod;
     @JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)

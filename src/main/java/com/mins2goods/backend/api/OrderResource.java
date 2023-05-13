@@ -2,7 +2,6 @@ package com.mins2goods.backend.api;
 
 import com.mins2goods.backend.dto.OrderDto;
 import com.mins2goods.backend.dto.OrderItemDto;
-import com.mins2goods.backend.model.OrderItem;
 import com.mins2goods.backend.model.Orders;
 import com.mins2goods.backend.service.OrderItemService;
 import com.mins2goods.backend.service.OrderService;
@@ -33,6 +32,12 @@ public class OrderResource {
     public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {
         Orders order = orderService.getOrderById(id).orElseThrow(() -> new RuntimeException("Order not found"));
         return ResponseEntity.ok(orderService.convertToDto(order));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable Long id){
+        orderService.deleteOrder(id);
+        return ResponseEntity.ok("Deleted");
     }
 
     @GetMapping("/user/{username}")

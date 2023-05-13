@@ -65,8 +65,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(Long orderId) {
-        orderRepository.deleteById(orderId);
+        Optional<Orders> optionalOrder = orderRepository.findById(orderId);
+
+        if (optionalOrder.isPresent()) {
+            Orders order = optionalOrder.get();
+
+            // Iterate over each order item
+            for (OrderItem orderItem : order.getOrderItems()) {
+                Product product = orderItem.getProduct();
+                int restoredStock = (int) (product.getQuantity() + orderItem.getQuantity());
+                product.setQuantity(restoredStock);
+                productRepository.save(product);
+            }
+            // Delete the order
+            orderRepository.deleteById(orderId);
+        } else {
+            throw new RuntimeException("Order not found with id: " + orderId);
+        }
     }
+
 
     @Override
     public Orders convertToEntity(OrderDto orderDto) {
@@ -85,6 +102,7 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderItemDto -> {
                     OrderItem orderItem = orderItemService.convertToEntity(orderItemDto);
                     orderItem.setOrder(order);
+                    orderItem.setDeliveryMethod(order.getDeliveryMethod());
                     return orderItem;
                 })
                 .collect(Collectors.toList());

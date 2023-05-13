@@ -62,6 +62,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         Product product = productRepository.findById(orderItemDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + orderItemDto.getProductId()));
         orderItem.setProduct(product);
+        orderItem.setDeliveryMethod(orderItemDto.getDeliveryMethod());
 
         return orderItem;
     }
@@ -74,6 +75,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemDto.setOrderId(orderItem.getOrder().getOrderId());
         orderItemDto.setProductId(orderItem.getProduct().getProductId());
         orderItemDto.setStatus(orderItem.getStatus());
+        orderItemDto.setDeliveryMethod(orderItem.getDeliveryMethod());
 
         return orderItemDto;
     }

@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/cartitem")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CartItemResource {
     private final CartItemService cartItemService;
     private final ProductService productService;
@@ -91,5 +92,11 @@ public class CartItemResource {
     public ResponseEntity<Void> deleteCartItem(@PathVariable Long itemId) {
         cartItemService.deleteCartItem(itemId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/buyer/{buyerUsername}")
+    public ResponseEntity<Void> clearCart(@PathVariable String buyerUsername){
+        cartItemService.clearCart(buyerUsername);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -15,4 +15,6 @@ public interface CartItemService {
     CartItem updateCartItem(CartItem cartItem);
 
     void deleteCartItem(Long itemId);
+    void clearCart(String username);
+
 }

@@ -42,4 +42,10 @@ public class CartItemServiceImpl implements CartItemService {
     public void deleteCartItem(Long itemId) {
         cartItemRepository.deleteById(itemId);
     }
+
+    @Override
+    public void clearCart(String username) {
+        cartItemRepository.deleteAllByBuyerId(userRepository.findByUsername(username).getUserId());
+    }
+
 }

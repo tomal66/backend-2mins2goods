@@ -55,9 +55,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItem convertToEntity(OrderItemDto orderItemDto) {
         OrderItem orderItem = new OrderItem();
-        orderItem.setItemId(orderItemDto.getItemId());
+        if(orderItemDto.getItemId()!=null){
+            orderItem.setItemId(orderItemDto.getItemId());
+        }
         orderItem.setQuantity(orderItemDto.getQuantity());
-
+        orderItem.setStatus("Pending");
         Product product = productRepository.findById(orderItemDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + orderItemDto.getProductId()));
         orderItem.setProduct(product);

@@ -20,8 +20,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
     private Long total;
-    private String paymentMethod;
-    private String status;
+    private String deliveryMethod;
     private Date createdAt;
     private Date updatedAt;
     @JsonManagedReference

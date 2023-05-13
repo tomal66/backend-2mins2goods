@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,13 +56,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Orders convertToEntity(OrderDto orderDto) {
         Orders order = new Orders();
-        order.setOrderId(orderDto.getOrderId());
+        if(orderDto.getOrderId()!=null){
+            order.setOrderId(orderDto.getOrderId());
+        }
         order.setTotal(orderDto.getTotal());
-        order.setPaymentMethod(orderDto.getPaymentMethod());
-        order.setStatus(orderDto.getStatus());
-        order.setCreatedAt(orderDto.getCreatedAt());
-        order.setUpdatedAt(orderDto.getUpdatedAt());
+        order.setDeliveryMethod(orderDto.getDeliveryMethod());
+//        order.setCreatedAt(orderDto.getCreatedAt());
+//        order.setUpdatedAt(orderDto.getUpdatedAt());
         order.setBuyer(userRepository.findByUsername(orderDto.getBuyerUsername()));
+        order.setCreatedAt(new Date());
+        order.setUpdatedAt(new Date());
         List<OrderItem> orderItems = orderDto.getOrderItems().stream()
                 .map(orderItemDto -> {
                     OrderItem orderItem = orderItemService.convertToEntity(orderItemDto);
@@ -80,8 +84,7 @@ public class OrderServiceImpl implements OrderService {
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderId(order.getOrderId());
         orderDto.setTotal(order.getTotal());
-        orderDto.setPaymentMethod(order.getPaymentMethod());
-        orderDto.setStatus(order.getStatus());
+
         orderDto.setCreatedAt(order.getCreatedAt());
         orderDto.setUpdatedAt(order.getUpdatedAt());
         orderDto.setBuyerUsername(order.getBuyer().getUsername());

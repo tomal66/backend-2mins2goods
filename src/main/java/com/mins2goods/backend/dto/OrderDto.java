@@ -9,8 +9,7 @@ import java.util.List;
 public class OrderDto {
     private Long orderId;
     private Long total;
-    private String paymentMethod;
-    private String status;
+    private String deliveryMethod;
     private String buyerUsername;
     private Date createdAt;
     private Date updatedAt;

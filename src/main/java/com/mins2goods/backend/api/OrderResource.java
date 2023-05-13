@@ -21,7 +21,7 @@ public class OrderResource {
     public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
         Orders order = orderService.convertToEntity(orderDto);
         orderService.createOrder(order);
-        return new ResponseEntity<>(orderDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(orderService.convertToDto(order), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

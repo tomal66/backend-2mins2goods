@@ -8,4 +8,5 @@ public class OrderItemDto {
     private Long quantity;
     private Long orderId;
     private Long productId;
+    private String status;
 }

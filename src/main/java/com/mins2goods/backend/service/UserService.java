@@ -10,6 +10,8 @@ public interface UserService {
     User saveUser(User user);
     User getUser(String username);
     List<UserDto> getUsers();
+    UserDto convertToUserDto(User user);
+    UserDto updateUser(String username, UserDto userDto);
 
     Optional<Object> getUserById(Long userId);
 }

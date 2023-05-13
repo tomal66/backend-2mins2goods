@@ -1,6 +1,5 @@
 package com.mins2goods.backend.service;
 
-import com.mins2goods.backend.dto.OrderDto;
 import com.mins2goods.backend.dto.OrderItemDto;
 import com.mins2goods.backend.model.OrderItem;
 
@@ -19,4 +18,5 @@ public interface OrderItemService {
     void deleteOrderItem(Long itemId);
     OrderItem convertToEntity(OrderItemDto orderItemDto);
     OrderItemDto convertToDto(OrderItem orderItem);
+    List<OrderItemDto> getOrdersBySeller(String username);
 }

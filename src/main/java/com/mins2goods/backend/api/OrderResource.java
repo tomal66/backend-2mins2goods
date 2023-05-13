@@ -1,7 +1,10 @@
 package com.mins2goods.backend.api;
 
 import com.mins2goods.backend.dto.OrderDto;
+import com.mins2goods.backend.dto.OrderItemDto;
+import com.mins2goods.backend.model.OrderItem;
 import com.mins2goods.backend.model.Orders;
+import com.mins2goods.backend.service.OrderItemService;
 import com.mins2goods.backend.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrderResource {
     private final OrderService orderService;
+    private final OrderItemService orderItemService;
 
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
@@ -35,6 +39,12 @@ public class OrderResource {
     public ResponseEntity<List<OrderDto>> getOrdersByBuyerUsername(@PathVariable String username) {
         List<Orders> orders = orderService.getOrdersByBuyerUsername(username);
         return ResponseEntity.ok(orders.stream().map(orderService::convertToDto).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/seller/{username}")
+    public ResponseEntity<List<OrderItemDto>> getOrdersBySellerUsername(@PathVariable String username) {
+        List<OrderItemDto> sellerOrderItems = orderItemService.getOrdersBySeller(username);
+        return ResponseEntity.ok(sellerOrderItems);
     }
 
     @PutMapping

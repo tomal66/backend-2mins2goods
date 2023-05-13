@@ -1,6 +1,5 @@
 package com.mins2goods.backend.service.impl;
 
-import com.mins2goods.backend.dto.OrderDto;
 import com.mins2goods.backend.dto.OrderItemDto;
 import com.mins2goods.backend.model.OrderItem;
 import com.mins2goods.backend.model.Orders;
@@ -78,5 +77,14 @@ public class OrderItemServiceImpl implements OrderItemService {
 
         return orderItemDto;
     }
+
+    @Override
+    public List<OrderItemDto> getOrdersBySeller(String username) {
+        List<OrderItem> orderItems = orderItemRepository.findBySellerUsername(username);
+        return orderItems.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
 
 }

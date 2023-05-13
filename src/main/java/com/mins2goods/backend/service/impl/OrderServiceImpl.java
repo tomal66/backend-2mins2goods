@@ -5,9 +5,12 @@ import com.mins2goods.backend.dto.OrderItemDto;
 
 import com.mins2goods.backend.model.OrderItem;
 import com.mins2goods.backend.model.Orders;
+import com.mins2goods.backend.model.Product;
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.repository.OrderRepository;
+import com.mins2goods.backend.repository.ProductRepository;
 import com.mins2goods.backend.repository.UserRepository;
+import com.mins2goods.backend.service.CartItemService;
 import com.mins2goods.backend.service.OrderItemService;
 import com.mins2goods.backend.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +28,22 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
+    private final ProductRepository productRepository;
     private final OrderItemService orderItemService;
+    private final CartItemService cartItemService;
 
     @Override
     public Orders createOrder(Orders order) {
+        for (OrderItem orderItem : order.getOrderItems()) {
+            Product product = orderItem.getProduct();
+            long newStock = product.getQuantity() - orderItem.getQuantity();
+            if (newStock < 0) {
+                throw new RuntimeException("Not enough stock for product with id: " + product.getProductId());
+            }
+            product.setQuantity(Math.toIntExact(newStock));
+            productRepository.save(product);
+        }
+        cartItemService.clearCart(order.getBuyer().getUsername());
         return orderRepository.save(order);
     }
 
@@ -97,5 +112,6 @@ public class OrderServiceImpl implements OrderService {
 
         return orderDto;
     }
+    
 
 }

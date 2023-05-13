@@ -84,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderId(order.getOrderId());
         orderDto.setTotal(order.getTotal());
-
+        orderDto.setDeliveryMethod(order.getDeliveryMethod());
         orderDto.setCreatedAt(order.getCreatedAt());
         orderDto.setUpdatedAt(order.getUpdatedAt());
         orderDto.setBuyerUsername(order.getBuyer().getUsername());

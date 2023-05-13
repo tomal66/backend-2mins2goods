@@ -74,6 +74,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemDto.setQuantity(orderItem.getQuantity());
         orderItemDto.setOrderId(orderItem.getOrder().getOrderId());
         orderItemDto.setProductId(orderItem.getProduct().getProductId());
+        orderItemDto.setStatus(orderItem.getStatus());
 
         return orderItemDto;
     }

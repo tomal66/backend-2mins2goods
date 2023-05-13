@@ -2,6 +2,7 @@ package com.mins2goods.backend.api;
 
 import com.mins2goods.backend.dto.OrderDto;
 import com.mins2goods.backend.dto.OrderItemDto;
+import com.mins2goods.backend.model.OrderItem;
 import com.mins2goods.backend.model.Orders;
 import com.mins2goods.backend.service.OrderItemService;
 import com.mins2goods.backend.service.OrderService;
@@ -27,6 +28,14 @@ public class OrderResource {
         orderService.createOrder(order);
         return new ResponseEntity<>(orderService.convertToDto(order), HttpStatus.CREATED);
     }
+
+    @PutMapping("/item")
+    public ResponseEntity<OrderItemDto> updateOrderItem( @RequestBody OrderItemDto orderItemDto) {
+        OrderItem orderItem = orderItemService.convertToEntity(orderItemDto);
+        OrderItem updatedOrderItem = orderItemService.updateOrderItem(orderItem);
+        return ResponseEntity.ok(orderItemService.convertToDto(updatedOrderItem));
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {

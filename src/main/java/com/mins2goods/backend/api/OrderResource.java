@@ -43,6 +43,11 @@ public class OrderResource {
         return ResponseEntity.ok(orderService.convertToDto(order));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<OrderItemDto>> getAllOrders() {
+        return ResponseEntity.ok(orderItemService.getAll());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         orderService.deleteOrder(id);

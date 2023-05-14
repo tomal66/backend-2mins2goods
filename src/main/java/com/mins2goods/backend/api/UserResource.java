@@ -4,6 +4,7 @@ import com.mins2goods.backend.dto.UserDto;
 import com.mins2goods.backend.model.User;
 import com.mins2goods.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,22 @@ public class UserResource {
         User user = userService.getUser(username);
         UserDto userDto = userService.convertToUserDto(user);
         return ResponseEntity.ok(userDto);
+    }
+
+    @PutMapping("/{username}/active")
+    public ResponseEntity<UserDto> toggleUserActiveStatus(@PathVariable String username) {
+        try {
+            User user = userService.getUser(username);
+            boolean newActiveStatus = !user.isActive(); // Toggle the active status
+            user.setActive(newActiveStatus);
+            UserDto userDto = userService.convertToUserDto(user);
+            UserDto updatedUser = userService.updateUser(user.getUsername(), userDto); // Save the updated user
+            return ResponseEntity.ok(updatedUser);
+
+        } catch (Exception e) {
+            // Handle other errors
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping

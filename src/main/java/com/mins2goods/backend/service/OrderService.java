@@ -11,6 +11,7 @@ public interface OrderService {
     Orders createOrder(Orders order);
     Optional<Orders> getOrderById(Long orderId);
     List<Orders> getOrdersByBuyerUsername(String username);
+
     Orders updateOrder(Orders order);
     void deleteOrder(Long orderId);
     Orders convertToEntity(OrderDto orderDto);

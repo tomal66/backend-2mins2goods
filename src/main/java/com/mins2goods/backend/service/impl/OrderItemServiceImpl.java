@@ -107,6 +107,15 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<OrderItemDto> getAll() {
+        List<OrderItem> orderItems = orderItemRepository.findAll();
+        return orderItems.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public OrderItemDto cancelOrderItem(Long itemId) {
         Optional<OrderItem> optionalOrderItem = orderItemRepository.findById(itemId);

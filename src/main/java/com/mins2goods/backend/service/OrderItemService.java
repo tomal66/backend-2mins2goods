@@ -20,5 +20,6 @@ public interface OrderItemService {
     OrderItemDto convertToDto(OrderItem orderItem);
     List<OrderItemDto> getOrdersBySeller(String username);
     List<OrderItemDto> getOrdersByBuyer(String username);
+    List<OrderItemDto> getAll();
     OrderItemDto cancelOrderItem(Long itemId);
 }

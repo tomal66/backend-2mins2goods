@@ -12,19 +12,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/reviews")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReviewResource {
     private final ReviewService reviewService;
     private final ProductService productService;
     private final UserService userService;
     @PostMapping
-    public ResponseEntity<Review> createReview(@RequestBody ReviewDto reviewDto) {
+    public ResponseEntity<String> createReview(@RequestBody ReviewDto reviewDto) {
         Review review = convertToEntity(reviewDto);
         Review savedReview = reviewService.saveReview(review);
-        return new ResponseEntity<>(savedReview, HttpStatus.CREATED);
+        return new ResponseEntity<>("Saved", HttpStatus.CREATED);
     }
 
     @GetMapping("/{reviewId}")
@@ -32,6 +35,25 @@ public class ReviewResource {
         return reviewService.getReviewById(reviewId)
                 .map(review -> new ResponseEntity<>(review, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<List<ReviewDto>> getReviewsByProductId(@PathVariable Long productId) {
+        List<Review> reviews = reviewService.getReviewsByProductId(productId);
+        List<ReviewDto> reviewDtos = reviews.stream().map(this::convertToDto).collect(Collectors.toList());
+        return ResponseEntity.ok(reviewDtos);
+    }
+
+    @GetMapping("/averageRating/{productId}")
+    public ResponseEntity<Optional<Double>> getAverageRating(@PathVariable Long productId) {
+        Optional<Double> averageRating = reviewService.findAverageRatingByProductId(productId);
+        return ResponseEntity.ok(averageRating);
+    }
+
+    @GetMapping("/totalReviews/{productId}")
+    public ResponseEntity<Long> getTotalReviews(@PathVariable Long productId) {
+        Long totalReviews = reviewService.countReviewsByProductId(productId);
+        return ResponseEntity.ok(totalReviews);
     }
 
     @GetMapping
@@ -51,11 +73,20 @@ public class ReviewResource {
         review.setReviewId(reviewDto.getReviewId());
         review.setComment(reviewDto.getComment());
         review.setRating(reviewDto.getRating());
-        // Set the Product and Buyer entities using their IDs
-        // You might need to add methods in the ProductService and UserService to fetch the entities by their IDs
         review.setProduct(productService.getProductById(reviewDto.getProductId()));
         User buyer = userService.getUser(reviewDto.getUsername());
         review.setBuyer(buyer);
         return review;
     }
+
+    private ReviewDto convertToDto(Review review) {
+        ReviewDto reviewDto = new ReviewDto();
+        reviewDto.setReviewId(review.getReviewId());
+        reviewDto.setComment(review.getComment());
+        reviewDto.setRating(review.getRating());
+        reviewDto.setProductId(review.getProduct().getProductId());
+        reviewDto.setUsername(review.getBuyer().getUsername());
+        return reviewDto;
+    }
+
 }

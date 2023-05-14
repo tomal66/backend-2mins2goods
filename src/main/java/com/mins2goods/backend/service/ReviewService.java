@@ -15,6 +15,7 @@ public interface ReviewService {
     void deleteReview(Long reviewId);
 
     List<Review> getReviewsByProductId(Long productId);
+    Long countReviewsByProductId(Long productId);
 
     List<Review> getReviewsByUserId(Long userId);
 

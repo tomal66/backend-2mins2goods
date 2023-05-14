@@ -55,7 +55,10 @@ public class ReviewServiceImpl implements ReviewService {
     public Optional<Double> findAverageRatingByProductId(Long productId) {
         return reviewRepository.findAverageRatingByProductId(productId);
     }
-
+    @Override
+    public Long countReviewsByProductId(Long productId) {
+        return reviewRepository.findTotalReviewsByProductId(productId);
+    }
     @Override
     public Optional<Double> findAverageRatingBySellerId(Long sellerId) {
         return reviewRepository.findAverageRatingBySellerId(sellerId);

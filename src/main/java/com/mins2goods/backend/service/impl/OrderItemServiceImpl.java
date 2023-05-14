@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,6 +44,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public OrderItem updateOrderItem(OrderItem orderItem) {
+        Orders order = orderRepository.findById(orderItem.getOrder().getOrderId()).orElseThrow();
+        order.setUpdatedAt(new Date());
         return orderItemRepository.save(orderItem);
     }
 
@@ -58,14 +61,23 @@ public class OrderItemServiceImpl implements OrderItemService {
             orderItem.setItemId(orderItemDto.getItemId());
         }
         orderItem.setQuantity(orderItemDto.getQuantity());
-        orderItem.setStatus("Pending");
+        orderItem.setStatus(orderItemDto.getStatus());
         Product product = productRepository.findById(orderItemDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + orderItemDto.getProductId()));
         orderItem.setProduct(product);
         orderItem.setDeliveryMethod(orderItemDto.getDeliveryMethod());
 
+        // Fetch the Order entity from the database and set it on the OrderItem
+        if(orderItemDto.getOrderId()!=null){
+            Orders order = orderRepository.findById(orderItemDto.getOrderId())
+                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderItemDto.getOrderId()));
+            orderItem.setOrder(order);
+        }
+
+
         return orderItem;
     }
+
 
     @Override
     public OrderItemDto convertToDto(OrderItem orderItem) {

@@ -40,7 +40,7 @@ public class ProductResource {
         return ResponseEntity.ok().body(nearbyProductDtos);
     }
 
-
+    //Done
     @GetMapping("/all")
     public ResponseEntity<List<ProductDto>> getAllProducts()
     {

@@ -13,6 +13,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AddressResource {
     private final AddressService addressService;
 

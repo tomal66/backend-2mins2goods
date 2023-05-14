@@ -100,5 +100,46 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderItemDto> getOrdersByBuyer(String username) {
+        List<OrderItem> orderItems = orderItemRepository.findsByBuyerUsername(username);
+        return orderItems.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public OrderItemDto cancelOrderItem(Long itemId) {
+        Optional<OrderItem> optionalOrderItem = orderItemRepository.findById(itemId);
+
+        if (optionalOrderItem.isPresent()) {
+            OrderItem orderItem = optionalOrderItem.get();
+
+            // Check if the order item status is either processing or pending
+            if (orderItem.getStatus().equalsIgnoreCase("processing") || orderItem.getStatus().equalsIgnoreCase("pending")) {
+                // Set status to cancelled
+                orderItem.setStatus("cancelled");
+
+                // Restore the product stock
+                Product product = orderItem.getProduct();
+                long restoredStock = product.getQuantity() + orderItem.getQuantity();
+                product.setQuantity((int) restoredStock);
+
+                // Save the product and order item
+                productRepository.save(product);
+                Orders order = orderRepository.findById(orderItem.getOrder().getOrderId()).orElseThrow();
+                order.setUpdatedAt(new Date());
+                //orderRepository.save(order);
+                orderItem = orderItemRepository.save(orderItem);
+
+                // Convert the order item entity to DTO and return it
+                return convertToDto(orderItem);
+            } else {
+                throw new RuntimeException("Order item with id: " + itemId + " cannot be cancelled as it is not in processing or pending status");
+            }
+        } else {
+            throw new RuntimeException("Order item not found with id: " + itemId);
+        }
+    }
+
 
 }

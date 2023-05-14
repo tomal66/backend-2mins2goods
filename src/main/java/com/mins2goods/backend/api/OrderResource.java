@@ -50,9 +50,9 @@ public class OrderResource {
     }
 
     @GetMapping("/user/{username}")
-    public ResponseEntity<List<OrderDto>> getOrdersByBuyerUsername(@PathVariable String username) {
-        List<Orders> orders = orderService.getOrdersByBuyerUsername(username);
-        return ResponseEntity.ok(orders.stream().map(orderService::convertToDto).collect(Collectors.toList()));
+    public ResponseEntity<List<OrderItemDto>> getOrdersByBuyerUsername(@PathVariable String username) {
+        List<OrderItemDto> userOrderItems = orderItemService.getOrdersByBuyer(username);
+        return ResponseEntity.ok(userOrderItems);
     }
 
     @GetMapping("/seller/{username}")
@@ -65,5 +65,15 @@ public class OrderResource {
     public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto orderDto) {
         Orders order = orderService.updateOrder(orderService.convertToEntity(orderDto));
         return ResponseEntity.ok(orderService.convertToDto(order));
+    }
+
+    @PutMapping("/{itemId}/cancel")
+    public ResponseEntity<OrderItemDto> cancelOrderItem(@PathVariable Long itemId) {
+        try {
+            OrderItemDto cancelledOrderItem = orderItemService.cancelOrderItem(itemId);
+            return new ResponseEntity<>(cancelledOrderItem, HttpStatus.OK);
+        } catch (RuntimeException ex) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 }

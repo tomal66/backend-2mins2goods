@@ -19,4 +19,6 @@ public interface OrderItemService {
     OrderItem convertToEntity(OrderItemDto orderItemDto);
     OrderItemDto convertToDto(OrderItem orderItem);
     List<OrderItemDto> getOrdersBySeller(String username);
+    List<OrderItemDto> getOrdersByBuyer(String username);
+    OrderItemDto cancelOrderItem(Long itemId);
 }

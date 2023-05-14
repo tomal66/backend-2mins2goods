@@ -15,4 +15,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     List<OrderItem> findByOrder(Optional<Orders> order);
     @Query("SELECT oi FROM OrderItem oi JOIN oi.product p JOIN p.seller u WHERE u.username = :username")
     List<OrderItem> findBySellerUsername(@Param("username") String username);
+
+    @Query("SELECT oi FROM OrderItem oi WHERE oi.order.buyer.username = :username")
+    List<OrderItem> findsByBuyerUsername(@Param("username") String username);
 }

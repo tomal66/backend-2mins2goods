@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 //@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private JWTAuthEntryPoint authEntryPoint;
+    private final JWTAuthEntryPoint authEntryPoint;
 
     private final CustomUserDetailsService userDetailsService;
 
